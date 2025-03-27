@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Upload</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+            <h1>Curriculum Management</h1>
+            <div>
+                <a href="dashboard.html" class="btn btn-light me-2">Back to Dashboard</a>
+                <button class="btn btn-light" id="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main class="p-4">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Upload New Curriculum</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="upload-form">
+                                <div class="mb-3">
+                                    <label for="course-name" class="form-label">Course Name</label>
+                                    <input type="text" class="form-control" id="course-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="course-description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="course-description" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Materials</label>
+                                    <input type="file" class="filepond" name="filepond" multiple>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Curriculum</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
+        // Initialize FilePond
+        FilePond.create(document.querySelector('input[type="file"]'), {
+            allowMultiple: true,
+            acceptedFileTypes: ['application/pdf', 'application/vnd.ms-powerpoint', 'application/msword'],
+            labelIdle: 'Drag & Drop your files or <span class="filepond--label-action">Browse</span>',
+            labelFileProcessingComplete: 'Upload complete',
+            labelFileProcessingError: 'Error during upload'
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = '../../index.html';
+        });
+
+        // Form submission
+        document.getElementById('upload-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Curriculum saved successfully! (This will connect to backend in production)');
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
